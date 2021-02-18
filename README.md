@@ -1,4 +1,4 @@
 Arduino-WaziCloud
 =================
 
-This library allows you to communicate directly to WaziCloud from yor Arduino board.
+This library allows you to communicate directly to WaziCloud from your Arduino board.
