@@ -1,0 +1,12 @@
+{
+  "name": "WaziCloud",
+  "keywords": "waziup, iot, wazicloud, wazidev, http, web, client, ethernet, wifi, GSM",
+  "description": "Interact with WaziCloud from your Arduino board.",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/Waziup/arduino-WaziCloud"
+  },
+  "frameworks": "arduino",
+  "platforms": "*"
+}
