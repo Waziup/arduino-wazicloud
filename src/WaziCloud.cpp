@@ -1,7 +1,6 @@
 #include "WaziCloud.h"
 
 char server[] = "api.waziup.io";
-char resource[]   = "/api/v2/devices/MyDevice/sensors/TC/value"; 
 char contentType[] = "text/plain;charset=utf-8";
 int port = 80; 
 
@@ -12,9 +11,14 @@ void WaziCloud::postSensorValue(const char* device_id, const char* sensor_id, co
  
   HttpClient httpClient = HttpClient(client, server, port);
   Serial.print("Posting value...");
+
+  char path[256];
+  snprintf(path, sizeof path, "%s%s%s%s%s", "/api/v2/devices/", device_id, "/sensors/", sensor_id, "/value");
+  Serial.print("Path: ");
+  Serial.println(path);
   //Send the message to WaziCloud
-  httpClient.post(resource, contentType, val);
-  Serial.print("Done");
+  httpClient.post(path, contentType, val);
+  Serial.println("Done");
   // read the status code and body of the response
   int statusCode = httpClient.responseStatusCode();
   String response = httpClient.responseBody();
