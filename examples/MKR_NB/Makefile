@@ -2,11 +2,10 @@
 # To use this Makefile, install https://github.com/sudar/Arduino-Makefile
 
 ARCHITECTURE     = samd
-BOARD_TAG        = mkrwifi1010
+BOARD_TAG        = mkrnb1500
 MONITOR_PORT     = /dev/ttyACM1
-ARDUINO_LIBS     = ArduinoHttpClient SPI WiFiNINA
+ARDUINO_LIBS     = ArduinoHttpClient MKRNB
 MONITOR_BAUDRATE = 38400 
-
 
 include ../../.env
 include /home/cdupont/Documents/workspace/Arduino-Makefile/Sam.mk

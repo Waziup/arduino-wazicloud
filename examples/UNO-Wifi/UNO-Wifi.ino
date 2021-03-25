@@ -1,3 +1,6 @@
+// This Sketch will send data to WaziCloud.
+// It works with an Arduinoi UNO and a Sparkfun ESP8266 Wifi shield.
+
 #include <SparkFunESP8266WiFi.h>
 #include "../../src/WaziCloud.cpp"
 

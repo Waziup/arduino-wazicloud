@@ -1,7 +1,5 @@
-#include <SPI.h>
 #include <WiFiNINA.h>
-#include <ArduinoHttpClient.h>
-#include <WaziCloud.h>
+#include "../../src/WaziCloud.cpp"
 
 char ssid[] = "311-verona";   // your network SSID (name)
 char pass[] = "1a2s3d4f5g";   // your network password (use for WPA, or use as key for WEP)
