@@ -39,7 +39,7 @@ void setup() {
 void loop() {
 
   //Send the message to WaziCloud
-  waziCloud.postSensorValue("MyDevice", "TC", "25");
+  waziCloud.postSensorValue("MyDevice", "TC1", "245");
 
   delay(5000);
 }
