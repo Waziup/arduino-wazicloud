@@ -2,8 +2,8 @@
 #include <ESP8266WiFi.h> //LIBRARY FOR ESP FUNCTIONALITY
 
 const char* host = "api.waziup.io"; //WAZIUP SERVER
-const char* devID = "605db108af408600066050ae"; //DEVICE ID - example 605db108af408600066050ae
-const char* sensorID = "temperatureSensor_1"; //SENSOR ID - example temperatureSensor_1
+const char* devID = "XXXX"; //DEVICE ID - example 605db108af408600066050ae
+const char* sensorID = "XXXX"; //SENSOR ID - example temperatureSensor_1
 const int http_port = 80; //HTTP PORT
 
 //const int relay_pin = 2; //RELAY PIN NUMBER
@@ -13,7 +13,7 @@ void setup() {
   //pinMode(relay_pin, OUTPUT); //DECLARING RELAY PIN AS OUTPUT
   
   //YOUR WIFI NAME XXXX, PASSWORD YYYY
-  WiFi.begin("Hive_Coworking", "sg@6Fb7c06M");   //ESTABLISH WIFI CONNECTION
+  WiFi.begin("XXXX", "YYYY");   //ESTABLISH WIFI CONNECTION
 
   Serial.println("Waiting for Connection");
   
