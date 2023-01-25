@@ -2,15 +2,15 @@
 #include <ESP8266WiFi.h> //LIBRARY FOR ESP WIFI FUNCTIONALITY
 
 const char* host = "api.waziup.io"; //WAZIUP SERVER
-const char* devID = "605db108af408195766050ae"; //DEVICE ID - example 605db108af408600066050ae
-const char* sensorID = "temperatureSensor_1"; //SENSOR ID - example temperatureSensor_1
+const char* devID = "XXXXXX"; //DEVICE ID - example 605db108af408600066050ae
+const char* sensorID = "YYYYYY"; //SENSOR ID - example temperatureSensor_1
 const int http_port = 443; //HTTPS PORT
 
 void setup() {
   Serial.begin(115200); //SERIAL COMMUNICATION RATE
   
   //YOUR WIFI NAME XXXX, PASSWORD YYYY
-  WiFi.begin("NerdBishop", "5at05h!c0!n");   //ESTABLISH WIFI CONNECTION
+  WiFi.begin("XXXXXX", "YYYYYY");   //ESTABLISH WIFI CONNECTION
 
   Serial.println("Waiting for Connection");
   
@@ -46,8 +46,8 @@ void loop() {
      http.addHeader("Content-Type", "application/json;charset=utf-8");  //SPECIFY CONTENT TYPE
  
     int value = 23; //SENDING VALUES TO THE CLOUD - e.g sending a dummy value of 23
-    char body[20]; //PARSING JSON DATA
-    sprintf( body, "{\"value\": %d}", value);//MORE PARSING & FORMATTING DATA
+    char body[20]; //HOLDS JSON DATA
+    sprintf( body, "{\"value\": %d}", value);//PARSING & FORMATTING DATA
     
     int httpCode = http.POST(body); //SENDING JSON DATA
     
