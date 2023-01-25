@@ -1,23 +1,20 @@
 #include <ESP8266HTTPClient.h> //LIBRARY FOR HTTP
-#include <ESP8266WiFi.h> //LIBRARY FOR ESP FUNCTIONALITY
+#include <ESP8266WiFi.h> //LIBRARY FOR ESP WIFI FUNCTIONALITY
 
 const char* host = "api.waziup.io"; //WAZIUP SERVER
-const char* devID = "XXXX"; //DEVICE ID - example 605db108af408600066050ae
-const char* sensorID = "XXXX"; //SENSOR ID - example temperatureSensor_1
-const int http_port = 80; //HTTP PORT
-
-//const int relay_pin = 2; //RELAY PIN NUMBER
+const char* devID = "XXXXXX"; //DEVICE ID - example 605db108af408600066050ae
+const char* sensorID = "YYYYYY"; //SENSOR ID - example temperatureSensor_1
+const int http_port = 443; //HTTPS PORT
 
 void setup() {
-  Serial.begin(115200); //SERIAL COMMUNICATION
-  //pinMode(relay_pin, OUTPUT); //DECLARING RELAY PIN AS OUTPUT
+  Serial.begin(115200); //SERIAL COMMUNICATION RATE
   
   //YOUR WIFI NAME XXXX, PASSWORD YYYY
-  WiFi.begin("XXXX", "YYYY");   //ESTABLISH WIFI CONNECTION
+  WiFi.begin("XXXXXX", "YYYYYY");   //ESTABLISH WIFI CONNECTION
 
   Serial.println("Waiting for Connection");
   
-  //IF WIFI DOESNT CONNECT CODE WONT GO PAST THIS BLOCK
+  //CODE WONT GO PAST THIS BLOCK, IF ESP DOESNT CONNECT TO WIFI
   while (WiFi.status() != WL_CONNECTED) {  //Wait for the WiFI connection completion
     delay(500);
     Serial.print(".");
@@ -30,47 +27,46 @@ void setup() {
 }
  
 void loop() {
-
+  
   //PARSING URL PATH - DONT TOUCH THIS
   String url = "/api/v2/devices/";
   url += devID;
   url += "/sensors/";
   url += sensorID;
+  //url += "/values"; //UNCOMMENT THIS IF YOU WANT ALL SENSOR DATA UP TILL DATE
   
   if (WiFi.status() == WL_CONNECTED) { //CHECK WIFI CONNECTION STATUS
- 
-    HTTPClient http;    //DECLARE OBJECT OF CLASS HTTPClient
- 
-    http.begin(host,http_port, url);      //SPECIFY REQUEST DESTINATION
- 
-    int httpCode = http.GET();   //GETTING RETURN CODE
-    Serial.println(httpCode);   //PRINT HTTP RETURN CODE
     
-    if (httpCode > 0) { //MAKING SURE THERE WAS A RESPONSE
-       // Get the request response payload
-       String payload = http.getString(); //ASSIGNING THE DATA RECEIVED TO THE PAYLOAD VARIABLE
-        
-       // TODO: Parsing
-       Serial.println(payload); //PRINTING THE DATA RECEIVED
-       Serial.println();
+    WiFiClientSecure client; //CONNECTION FOR HTTPS
+    HTTPClient http;    //DECLARE OBJECT OF CLASS HTTPClient
 
-       /*
-       //SUBSTRINGING TO GET THE NEEDED VALUE IN THE PAYLOAD
-       int strt_p = payload.lastIndexOf("value") + 7;
-       int end_p = payload.indexOf("timestamp") - 2;
-       String control = payload.substring(strt_p, end_p);
-       Serial.println(control);
-  
-       if(control.equals("1")){ //RELAY ON IF VALUE IS 1
-          digitalWrite(relay_pin, HIGH);
-       }else if(control.equals("0")){ //RELAY OFF IF VALUE IS 0
-          digitalWrite(relay_pin, LOW);
-       }
-        */
+    client.setInsecure(); //USING THIS BECAUSE WE DONT HAVE SSL CERTIFICATE FINGERPRINT
+    
+    http.begin(client ,host ,http_port ,url);      //SPECIFY REQUEST DESTINATION
+
+    int httpCode = http.GET(); //SENDING JSON DATA
+    
+    // HTTP CODE WILL BE NEGATIVE IF THERE'S AN ERROR
+    if (httpCode > 0) {
+      // HTTP header has been send and Server response header has been handled
+      Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+
+      // FILE FOUND ON SERVER
+      if (httpCode == HTTP_CODE_OK) {
+        const String& payload = http.getString();
+        Serial.println("received payload:\n<<");
+        Serial.println(payload);
+        Serial.println(">>");
+      }
+    } else {
+      Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
     }
-    Serial.println("Closing Connection");
-    http.end();   //Close connection
-    Serial.println();
+    
+    http.end();  //CLOSING HTTP CONNECTION
+ 
+  } else {
+    Serial.println("WiFi Connection Fail");//IF ESP CAN'T CONNECTED TO WIFI
   }
-  delay(5000);  //SEND REQUEST EVERY 5 SECONDS
+  
+  delay(10000);  //SENDING SENSOR DATA EVERY 30 SECONDS
 }
