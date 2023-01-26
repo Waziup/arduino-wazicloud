@@ -37,7 +37,6 @@ void loop() {
   url += devID;
   url += "/actuators/";
   url += actuatorID;
-  //url += "/values"; //UNCOMMENT THIS IF YOU WANT ALL SENSOR DATA UP TILL DATE
 
   if (WiFi.status() == WL_CONNECTED) { //CHECK WIFI CONNECTION STATUS
 
